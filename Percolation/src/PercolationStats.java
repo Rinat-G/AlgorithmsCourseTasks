@@ -1,15 +1,11 @@
 import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
-import java.lang.Math;
 
-/**
- * Created by R0cky on 04.07.2017.
- */
 public class PercolationStats {
 
-    private double[] trialsResults;
+    private final double[] trialsResults;
     private double mean = 0.0;
-    private double stddev =0.0;
+    private double stddev = 0.0;
 
     public PercolationStats(int n, int trials) {  // perform trials independent experiments on an n-by-n grid
         constructorArgValidate(n, trials);
@@ -20,7 +16,7 @@ public class PercolationStats {
                 percolation.open(StdRandom.uniform(1, n + 1), StdRandom.uniform(1, n + 1));
             }
             //System.out.println("Threshold: " + (percolation.numberOfOpenSites() / (double)(n*n)));
-            trialsResults[i] = percolation.numberOfOpenSites() / (double)(n*n);
+            trialsResults[i] = percolation.numberOfOpenSites() / (double) (n * n);
 
         }
 
@@ -40,16 +36,14 @@ public class PercolationStats {
     public double confidenceLo() {                // low  endpoint of 95% confidence interval
         if (mean == 0.0) mean = mean();
         if (stddev == 0.0) stddev = stddev();
-        double confidenceLo = mean - (1.96 * stddev)/ Math.sqrt(trialsResults.length);
-        return confidenceLo;
+        return mean - (1.96 * stddev) / Math.sqrt(trialsResults.length);
 
     }
 
     public double confidenceHi() {
         if (mean == 0.0) mean = mean();
         if (stddev == 0.0) stddev = stddev();
-        double confidenceHi = mean + (1.96 * stddev)/ Math.sqrt(trialsResults.length);// high endpoint of 95% confidence interval
-        return confidenceHi;
+        return mean + (1.96 * stddev) / Math.sqrt(trialsResults.length);
 
     }
 

@@ -1,23 +1,18 @@
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
-/**
- * Created by R0cky on 04.07.2017.
- */
+
 public class Percolation {
-    private boolean[] siteFullness;
     private boolean[] siteOpenness;
-    private WeightedQuickUnionUF uf;
-    private int gridSize;
-    private int gridDimension;
+    private final WeightedQuickUnionUF uf;
+    private final int gridDimension;
     private int openSites;
-    private int virtualTopSite;
-    private int virtualBottomSite;
+    private final int virtualTopSite;
+    private final int virtualBottomSite;
 
     public Percolation(int n) {     // create n-by-n grid, with all sites blocked
         constructorArgValidate(n);
         gridDimension = n;
-        gridSize = n * n;
-        siteFullness = new boolean[gridSize];
+        int gridSize = n * n;
         siteOpenness = new boolean[gridSize];
         uf = new WeightedQuickUnionUF(gridSize + 2);
         virtualTopSite = gridSize;
@@ -75,7 +70,7 @@ public class Percolation {
 
     private void validateArgs(int p, int q) {
         if (p < 1 || p > gridDimension || q < 1 || q > gridDimension) {
-            throw new IllegalArgumentException("Argument " + p + "is out of range");
+            throw new IllegalArgumentException("Argument " + p + " is out of range");
         }
     }
 
@@ -96,6 +91,11 @@ public class Percolation {
     }
 
     private void unionAdjacentSites(int row, int col, int index) {
+        if (gridDimension == 1) {
+            uf.union(virtualTopSite, index);
+            uf.union(virtualBottomSite, index);
+            return;
+        }
         if (row == 1) {
             uf.union(virtualTopSite, index);
             if (isOpen(row + 1, col)) uf.union(index, bottom(index));
