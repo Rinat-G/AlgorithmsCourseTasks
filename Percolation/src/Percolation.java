@@ -3,8 +3,10 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
     private boolean[] siteOpenness;
+    private boolean[] siteFullness;
     private final WeightedQuickUnionUF uf;
     private final int gridDimension;
+    private int gridSize;
     private int openSites;
     private final int virtualTopSite;
     private final int virtualBottomSite;
@@ -14,6 +16,7 @@ public class Percolation {
         gridDimension = n;
         int gridSize = n * n;
         siteOpenness = new boolean[gridSize];
+        siteFullness = new boolean[gridSize];
         uf = new WeightedQuickUnionUF(gridSize + 2);
         virtualTopSite = gridSize;
         virtualBottomSite = gridSize + 1;
@@ -42,7 +45,13 @@ public class Percolation {
     public boolean isFull(int row, int col) {   // is site (row, col) full?
         validateArgs(row, col);
         int index = rowColumnToIndex(row, col);
-        return uf.connected(index, virtualTopSite);
+
+        if (siteFullness[index]) return true;
+        else if (siteOpenness[index]) {
+            siteFullness[index] = uf.connected(index, virtualTopSite);
+            return siteFullness[index];
+        }
+        return false;
     }
 
     public int numberOfOpenSites() {     // number of open sites
@@ -50,7 +59,11 @@ public class Percolation {
     }
 
     public boolean percolates() {   // does the system percolate?
-        return uf.connected(virtualTopSite, virtualBottomSite);
+        for (int i = siteFullness.length - gridDimension; i < siteFullness.length; i++) {
+            if(siteFullness[i]) return true;
+        }
+        return false;
+//        return uf.connected(virtualTopSite, virtualBottomSite);
 
     }
 
@@ -103,8 +116,9 @@ public class Percolation {
         }
 
         if (row == gridDimension) {
-            uf.union(virtualBottomSite, index);
             if (isOpen(row - 1, col)) uf.union(index, top(index));
+            if (col != gridDimension) if (isOpen(row, col + 1)) uf.union(index, right(index));
+            if (col != 1) if (isOpen(row, col - 1)) uf.union(index, left(index));
             return;
         }
 
