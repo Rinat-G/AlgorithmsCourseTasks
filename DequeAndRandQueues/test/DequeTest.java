@@ -1,8 +1,9 @@
+import edu.princeton.cs.algs4.StdRandom;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.Collections;
+
+
 import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
@@ -95,6 +96,39 @@ public class DequeTest {
         assertEquals(testArray, actualArray);
 
     }
+
+    @Test
+    public void testIteratorIndepend(){
+        Integer[] testArray = {10, 20, 30, 40, 50};
+        for (Integer arrayItem :
+                testArray) {
+            deque.addLast(arrayItem);
+        }
+
+
+        for (Integer dequeItemOut :
+                deque) {
+            for (Integer dequeItemIn :
+                    deque) {
+                System.out.print(dequeItemIn);
+
+            }
+            System.out.println();
+            System.out.println(dequeItemOut);
+        }
+
+
+    }
+
+    @Test
+    public void uRandTest(){
+        for (int i = 0; i < 100; i++) {
+            System.out.println(StdRandom.uniform(10));
+        }
+    }
+
+
+
 
 
 }
