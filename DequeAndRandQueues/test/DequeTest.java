@@ -1,7 +1,7 @@
+import edu.princeton.cs.algs4.Knuth;
 import edu.princeton.cs.algs4.StdRandom;
 import org.junit.Before;
 import org.junit.Test;
-
 
 
 import java.util.Random;
@@ -11,9 +11,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 
-/**
- * Created by R0cky on 03.08.2017.
- */
 public class DequeTest {
     Deque<Integer> deque;
 
@@ -98,7 +95,7 @@ public class DequeTest {
     }
 
     @Test
-    public void testIteratorIndepend(){
+    public void testIteratorIndepend() {
         Integer[] testArray = {10, 20, 30, 40, 50};
         for (Integer arrayItem :
                 testArray) {
@@ -121,14 +118,36 @@ public class DequeTest {
     }
 
     @Test
-    public void uRandTest(){
+    public void uRandTest() {
         for (int i = 0; i < 100; i++) {
             System.out.println(StdRandom.uniform(10));
         }
     }
 
+    @Test
 
+    public void prostoTest() {
+        Integer[] src = {2, 5, 7, 8, 3, 0};
+        Integer[] dst = new Integer[src.length];
+        System.arraycopy(src, 0, dst, 0, src.length);
+        for (Integer intgr :
+                src) {
+            System.out.println(intgr);
+        }
 
+        System.out.println();
+        Knuth.shuffle(dst);
+
+        for (Integer intgr :
+                src) {
+            System.out.println(intgr);
+        }
+        System.out.println();
+        for (Integer intgr :
+                dst) {
+            System.out.println(intgr);
+        }
+    }
 
 
 }
