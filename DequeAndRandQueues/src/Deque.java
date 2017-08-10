@@ -7,8 +7,8 @@ public class Deque<Item> implements Iterable<Item> {
     private int size;
 
     private static class Node<Item> {
-        Node<Item> next;
-        Node<Item> previous;
+        private Node<Item> next;
+        private Node<Item> previous;
         private final Item item;
 
         Node(Node<Item> previous, Item item, Node<Item> next) {
@@ -20,7 +20,8 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     public Deque() {                           // construct an empty deque
-        first = last = null;
+        first = null;
+        last = null;
         size = 0;
     }
 
@@ -50,13 +51,13 @@ public class Deque<Item> implements Iterable<Item> {
     public void addLast(Item item) {          // add the item to the end
         if (item == null) throw new IllegalArgumentException("Item cannot be null");
 
-        final Node<Item> l = last;
-        final Node<Item> newNode = new Node<>(l, item, null);
+        final Node<Item> lst = last;
+        final Node<Item> newNode = new Node<>(lst, item, null);
         last = newNode;
-        if (l == null) {
+        if (lst == null) {
             first = newNode;
         } else {
-            l.next = newNode;
+            lst.next = newNode;
         }
         size++;
     }
@@ -77,18 +78,18 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     public Item removeLast() {             // remove and return the item from the end
-        final Node<Item> l = last;
-        if (l == null) throw new java.util.NoSuchElementException("Cant remove element from empty deque");
+        final Node<Item> lst = last;
+        if (lst == null) throw new java.util.NoSuchElementException("Cant remove element from empty deque");
 
-        if (l.previous == null) {
+        if (lst.previous == null) {
             first = null;
             last = null;
         } else {
-            last = l.previous;
+            last = lst.previous;
             last.next = null;
         }
         size--;
-        return l.item;
+        return lst.item;
     }
 
     public Iterator<Item> iterator() {       // return an iterator over items in order from front to end
@@ -96,13 +97,10 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     private class DeqItr implements Iterator<Item> {
-        Node<Item> first;
-        //        Node<Item> last;
-        Node<Item> next;
+
+        private Node<Item> next;
 
         DeqItr(Node<Item> first) {
-            this.first = first;
-//            this.last = last;
             this.next = first;
         }
 
@@ -121,7 +119,7 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     public static void main(String[] args) {
-
+        //must be empty
     }
 
 }

@@ -6,13 +6,15 @@ import java.util.NoSuchElementException;
 
 public class RandomizedQueue<Item> implements Iterable<Item> {
     private int size;
-    Item[] rq;
+    private Item[] rq;
 
 
     public RandomizedQueue() {
         size = 0;
+
         rq = (Item[]) new Object[2];
     }
+
 
     public boolean isEmpty() {
         return size == 0;
@@ -65,7 +67,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     private class RandQueueItr implements Iterator<Item> {
-        private Item[] iterRQ;
+        private final Item[] iterRQ;
         private int i;
 
         RandQueueItr() {
@@ -90,5 +92,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     public static void main(String[] args) {
+        //must be empty
     }
 }
