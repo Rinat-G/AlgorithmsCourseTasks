@@ -4,12 +4,13 @@ import java.util.Comparator;
 
 public class Point implements Comparable<Point> {
 
+    private final int MAX_COORDINATE_VAL = 32767;
     private final int x;
     private final int y;
 
     public Point(int x, int y) {             // constructs the point (x, y)
-        assert (x >= 0 && x <= 32767);
-        assert (y >= 0 && y <= 32767);
+        assert (x >= 0 && x <= MAX_COORDINATE_VAL);
+        assert (y >= 0 && y <= MAX_COORDINATE_VAL);
         this.x = x;
         this.y = y;
     }
@@ -70,7 +71,6 @@ public class Point implements Comparable<Point> {
     public static void main(String[] args) {
         Point point = new Point(2, 2);
         Point point2 = new Point(1, 3);
-        Point point3 = new Point(5, 5266);
         System.out.println(point.slopeTo(point2));
     }
 }
